@@ -69,6 +69,12 @@ class AssetUsage_AssetService extends BaseApplicationComponent
     private function getAllElementsOfType($type)
     {
         $relatedAssetIds = array();
+
+        // Make sure the type exists.
+        if (craft()->elements->getElementType($type) === null) {
+            return $relatedAssetIds;
+        }
+
         $locales = craft()->i18n->getSiteLocaleIds();
 
         foreach ($locales as $locale) {
