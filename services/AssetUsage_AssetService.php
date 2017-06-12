@@ -39,6 +39,9 @@ class AssetUsage_AssetService extends BaseApplicationComponent
             // In case of SuperTable plugin.
             $relatedAssetIds = array_merge($relatedAssetIds, $this->getAllElementsOfType('SuperTable_Block'));
 
+            // In case of Neo plugin
+            $relatedAssetIds = array_merge($relatedAssetIds, $this->getAllElementsOfType('Neo_Block'));
+
             $this->usedAssetIds = array_unique($relatedAssetIds);
         }
 
