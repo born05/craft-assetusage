@@ -2,9 +2,7 @@
 
 Adds a column to see which assets are used or unused. For Craft 3.
 
-- Checks Asset relation with Entry, Category, Tag, GlobalSet, MatrixBlock, SuperTable_Block
-- Compatible with SuperTable plugin
-- Compatible with Focus Point plugin
+- Checks the relations table, so should be compatible with matrix, supertable and most plugins.
 
 ## License
 

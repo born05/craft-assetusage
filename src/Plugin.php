@@ -30,7 +30,7 @@ class Plugin extends CraftPlugin
         parent::init();
         self::$plugin = $this;
 
-        if (!$this->isInstalled || $request->getIsConsoleRequest()) return;
+        if (!$this->isInstalled) return;
 
         // Register Components (Services)
         $this->setComponents([
@@ -43,24 +43,21 @@ class Plugin extends CraftPlugin
          *
          * @return array
          */
-        Event::on(
-            Asset::class,
-            Asset::EVENT_REGISTER_TABLE_ATTRIBUTES,
-            function(RegisterElementTableAttributesEvent $e) {
-                $e->tableAttributes['usage'] = [
-                    'label' => Craft::t('Usage'),
-                ];
+        Event::on(Asset::class, Asset::EVENT_REGISTER_TABLE_ATTRIBUTES, function(RegisterElementTableAttributesEvent $event) {
+            $event->tableAttributes['usage'] = [
+                'label' => Craft::t('assetusage', 'Usage'),
+            ];
         });
-        
-        
-        Event::on(
-            Asset::class,
-            Asset::EVENT_SET_TABLE_ATTRIBUTE_HTML,
-            function(SetElementTableAttributeHtmlEvent $e) {
-                if ($e->attribute === 'usage') {
-                    $e->html = $this->asset->getUsage($asset);
-                }
+
+        Event::on(Asset::class, Asset::EVENT_SET_TABLE_ATTRIBUTE_HTML, function(SetElementTableAttributeHtmlEvent $event) {
+            if ($event->attribute === 'usage') {
+                /** @var Asset $asset */
+                $asset = $event->sender;
+                $event->html = $this->asset->getUsage($asset);
+
+                // Prevent other event listeners from getting invoked
+                $event->handled = true;
             }
-        );
+        });
     }
 }
