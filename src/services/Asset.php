@@ -1,7 +1,11 @@
 <?php
-namespace Craft;
 
-class AssetUsage_AssetService extends BaseApplicationComponent
+namespace born05\assetusage\services;
+
+use Craft;
+use craft\base\Component;
+
+class Asset extends Component
 {
     private $usedAssetIds = null;
 
@@ -86,7 +90,7 @@ class AssetUsage_AssetService extends BaseApplicationComponent
             $criteria->status = null;
             $criteria->limit = null;
 
-            $entries = $criteria->find();
+            $entries = $criteria->all();
             $relatedAssetIds = array_merge($relatedAssetIds, $this->getRelatedAssetIds($entries));
         }
 

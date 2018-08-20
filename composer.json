@@ -2,14 +2,38 @@
     "name": "born05/craft-assetusage",
     "description": "Adds a column to see which assets are used or unused.",
     "type": "craft-plugin",
-    "license": "https://github.com/born05/craft-assetusage/blob/master/LICENSE",
+    "version": "2.0.0-beta.1",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "asset usage"
+    ],
+    "support": {
+        "docs": "https://github.com/born05/craft-assetusage/blob/master/README.md",
+        "issues": "https://github.com/born05/craft-assetusage/issues"
+    },
+    "license": "MIT",
     "authors": [
         {
             "name": "Born05",
-            "email": "development@born05.com"
+            "homepage": "https://www.born05.com/"
         }
     ],
     "require": {
-        "composer/installers": "~1.0"
+        "craftcms/cms": "^3.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "born05\\assetusage\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Asset Usage",
+        "handle": "assetusage",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/born05/craft-assetusage/master/CHANGELOG.md"
     }
 }
