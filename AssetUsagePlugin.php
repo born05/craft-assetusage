@@ -10,7 +10,7 @@ class AssetUsagePlugin extends BasePlugin
 
     public function getVersion()
     {
-        return '1.0.2';
+        return '1.0.3';
     }
 
     public function getDeveloper()
@@ -35,12 +35,12 @@ class AssetUsagePlugin extends BasePlugin
      */
     public function getDocumentationUrl()
     {
-        return $this->getPluginUrl() . '/blob/master/README.md';
+        return $this->getPluginUrl() . '/blob/craft-2/README.md';
     }
 
     public function getReleaseFeedUrl()
     {
-        return 'https://raw.githubusercontent.com/born05/craft-assetusage/master/releases.json';
+        return 'https://raw.githubusercontent.com/born05/craft-assetusage/craft-2/releases.json';
     }
 
     public function hasCpSection()

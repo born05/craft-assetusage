@@ -12,4 +12,4 @@ Adds a column to see which assets are used or unused. For Craft 2.
 
 ## License
 
-See [license](https://github.com/born05/craft-assetusage/blob/master/LICENSE)
+See [license](https://github.com/born05/craft-assetusage/blob/craft-2/LICENSE)
