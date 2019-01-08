@@ -9,6 +9,7 @@ Adds a column to the assets overview to see which assets are used or unused. For
 ### Does NOT support (assets not connected through relations table)
 - LinkIt
 - Redactor
+- ether/seo
 
 ## License
 
