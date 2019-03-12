@@ -13,11 +13,29 @@ class AssetUsage_AssetService extends BaseApplicationComponent
      */
     public function getUsage(AssetFileModel $asset)
     {
+
+        // Use fast query instead of memory consuming method
+        $results = craft()->db->createCommand()
+          ->select( array('id') )
+          ->from( array('{{relations}}') )
+          ->where( array('targetId' => $asset->id) )
+          ->orWhere( array('sourceId' => $asset->id) )
+          ->queryAll();
+
+        $count = count($results);
+        if ($count >= 1) {
+          return Craft::t('Used') . ': ' . $count . 'x';
+        } else {
+          return '<span style="color: #da5a47;">' . Craft::t('Unused') . '</span>';
+        }
+
+        /*
         if (in_array($asset->id, $this->getUsedAssetIds())) {
             return Craft::t('Used');
         }
 
         return '<span style="color: #da5a47;">' . Craft::t('Unused') . '</span>';
+        */
     }
 
     /**
