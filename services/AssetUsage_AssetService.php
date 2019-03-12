@@ -3,8 +3,6 @@ namespace Craft;
 
 class AssetUsage_AssetService extends BaseApplicationComponent
 {
-    private $usedAssetIds = null;
-
     /**
      * Determines if an asset is in use or not.
      *
@@ -16,98 +14,20 @@ class AssetUsage_AssetService extends BaseApplicationComponent
 
         // Use fast query instead of memory consuming method
         $results = craft()->db->createCommand()
-          ->select( array('id') )
-          ->from( array('{{relations}}') )
-          ->where( array('targetId' => $asset->id) )
-          ->orWhere( array('sourceId' => $asset->id) )
-          ->queryAll();
+            ->select(['id'])
+            ->from(['{{relations}}'])
+            ->where(['targetId' => $asset->id])
+            ->orWhere(['sourceId' => $asset->id])
+            ->queryAll();
 
         $count = count($results);
-        if ($count >= 1) {
-          return Craft::t('Used') . ': ' . $count . 'x';
-        } else {
-          return '<span style="color: #da5a47;">' . Craft::t('Unused') . '</span>';
+
+        if ($count === 1) {
+            return Craft::t('assetusage', 'Used {count} time', [ 'count' => $count ]);
+        } else if ($count > 1) {
+            return Craft::t('assetusage', 'Used {count} times', [ 'count' => $count ]);
         }
-
-        /*
-        if (in_array($asset->id, $this->getUsedAssetIds())) {
-            return Craft::t('Used');
-        }
-
-        return '<span style="color: #da5a47;">' . Craft::t('Unused') . '</span>';
-        */
-    }
-
-    /**
-     * Retrieves all used asset ids.
-     *
-     * @return array
-     */
-    public function getUsedAssetIds()
-    {
-        if (is_null($this->usedAssetIds)) {
-            $relatedAssetIds = array();
-
-            $relatedAssetIds = array_merge($relatedAssetIds, $this->getAllElementsOfType(ElementType::Entry));
-            $relatedAssetIds = array_merge($relatedAssetIds, $this->getAllElementsOfType(ElementType::Category));
-            $relatedAssetIds = array_merge($relatedAssetIds, $this->getAllElementsOfType(ElementType::Tag));
-            $relatedAssetIds = array_merge($relatedAssetIds, $this->getAllElementsOfType(ElementType::GlobalSet));
-            $relatedAssetIds = array_merge($relatedAssetIds, $this->getAllElementsOfType(ElementType::MatrixBlock));
-
-            // In case of SuperTable plugin.
-            $relatedAssetIds = array_merge($relatedAssetIds, $this->getAllElementsOfType('SuperTable_Block'));
-
-            // In case of Neo plugin
-            $relatedAssetIds = array_merge($relatedAssetIds, $this->getAllElementsOfType('Neo_Block'));
-
-            $this->usedAssetIds = array_unique($relatedAssetIds);
-        }
-
-        return $this->usedAssetIds;
-    }
-
-    /**
-     * Retrieve all related asset ids.
-     *
-     * @param array $relatedTo
-     * @return array
-     */
-    private function getRelatedAssetIds($relatedTo)
-    {
-        $criteria = craft()->elements->getCriteria(ElementType::Asset);
-        $criteria->limit = null;
-        $criteria->relatedTo = array(
-            'sourceElement' => $relatedTo,
-        );
-
-        return $criteria->ids();
-    }
-
-    /**
-     * Get all elements of type.
-     * @return array
-     */
-    private function getAllElementsOfType($type)
-    {
-        $relatedAssetIds = array();
-
-        // Make sure the type exists.
-        if (craft()->elements->getElementType($type) === null) {
-            return $relatedAssetIds;
-        }
-
-        $locales = craft()->i18n->getSiteLocaleIds();
-
-        foreach ($locales as $locale) {
-            $criteria = craft()->elements->getCriteria($type);
-            $criteria->locale = $locale;
-            $criteria->status = null;
-            $criteria->limit = null;
-
-            $entries = $criteria->find();
-            $relatedAssetIds = array_merge($relatedAssetIds, $this->getRelatedAssetIds($entries));
-        }
-
-        return $relatedAssetIds;
+        
+        return '<span style="color: #da5a47;">' . Craft::t('assetusage', 'Unused') . '</span>';
     }
 }
