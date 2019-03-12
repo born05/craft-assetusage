@@ -2,7 +2,7 @@
     "name": "born05/craft-assetusage",
     "description": "Adds a column to see which assets are used or unused.",
     "type": "craft-plugin",
-    "license": "https://github.com/born05/craft-assetusage/blob/craft-2/LICENSE",
+    "license": "MIT",
     "authors": [
         {
             "name": "Born05",
