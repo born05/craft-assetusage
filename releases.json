@@ -1,5 +1,13 @@
 [
   {
+    "version": "1.0.4",
+    "downloadUrl": "https://github.com/born05/craft-assetusage/archive/1.0.4.zip",
+    "date": "2019-03-12T11:00:00+00:00",
+    "notes": [
+      "Speed up usage count thanks to @websNL"
+    ]
+  },
+  {
     "version": "1.0.3",
     "downloadUrl": "https://github.com/born05/craft-assetusage/archive/1.0.3.zip",
     "date": "2017-08-20T11:00:00+00:00",
