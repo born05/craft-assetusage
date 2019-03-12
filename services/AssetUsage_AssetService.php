@@ -23,11 +23,11 @@ class AssetUsage_AssetService extends BaseApplicationComponent
         $count = count($results);
 
         if ($count === 1) {
-            return Craft::t('assetusage', 'Used {count} time', [ 'count' => $count ]);
+            return Craft::t('Used {count} time', [ 'count' => $count ]);
         } else if ($count > 1) {
-            return Craft::t('assetusage', 'Used {count} times', [ 'count' => $count ]);
+            return Craft::t('Used {count} times', [ 'count' => $count ]);
         }
         
-        return '<span style="color: #da5a47;">' . Craft::t('assetusage', 'Unused') . '</span>';
+        return '<span style="color: #da5a47;">' . Craft::t('Unused') . '</span>';
     }
 }
