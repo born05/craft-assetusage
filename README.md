@@ -20,4 +20,6 @@ Adds a column to the assets overview to see which assets are used or unused. For
 
 ## License
 
+Copyright © [Born05](https://www.born05.com/)
+
 See [license](https://github.com/born05/craft-assetusage/blob/master/LICENSE.md)
