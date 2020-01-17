@@ -5,6 +5,7 @@ namespace born05\assetusage;
 use Craft;
 use born05\assetusage\services\Asset as AssetService;
 use craft\base\Plugin as CraftPlugin;
+use craft\console\Application as ConsoleApplication;
 use craft\elements\Asset;
 use craft\events\RegisterElementTableAttributesEvent;
 use craft\events\SetElementTableAttributeHtmlEvent;
@@ -36,6 +37,11 @@ class Plugin extends CraftPlugin
         $this->setComponents([
             'asset' => AssetService::class,
         ]);
+
+        // Add in our console commands
+        if (Craft::$app instanceof ConsoleApplication) {
+            $this->controllerNamespace = 'born05\assetusage\console\controllers';
+        }
 
         /**
          * Adds the following attributes to the asset fields in CMS

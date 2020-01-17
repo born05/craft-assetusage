@@ -5,6 +5,7 @@ namespace born05\assetusage\services;
 use Craft;
 use craft\base\Component;
 use craft\db\Query;
+use craft\db\Table;
 use craft\elements\Asset as AssetElement;
 
 class Asset extends Component
@@ -21,7 +22,7 @@ class Asset extends Component
     {
         $results = (new Query())
           ->select(['id'])
-          ->from(['{{%relations}}'])
+          ->from(Table::RELATIONS)
           ->where(['targetId' => $asset->id])
           ->orWhere(['sourceId' => $asset->id])
           ->all();

@@ -18,6 +18,13 @@ Adds a column to the assets overview to see which assets are used or unused. For
 - Redactor
 - ether/seo
 
+## Commandline usage
+
+```sh
+craft assetusage/default/delete-unused  # Deletes all unused assets.
+craft assetusage/default/list-unused    # Lists all unused assets.
+```
+
 ## License
 
 Copyright © [Born05](https://www.born05.com/)
