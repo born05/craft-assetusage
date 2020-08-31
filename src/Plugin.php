@@ -53,6 +53,10 @@ class Plugin extends CraftPlugin
             $event->tableAttributes['usage'] = [
                 'label' => Craft::t('assetusage', 'Usage'),
             ];
+
+            $event->tableAttributes['currentUsage'] = [
+                'label' => Craft::t('assetusage', 'Current Usage'),
+            ];
         });
 
         Event::on(Asset::class, Asset::EVENT_SET_TABLE_ATTRIBUTE_HTML, function(SetElementTableAttributeHtmlEvent $event) {
@@ -60,6 +64,15 @@ class Plugin extends CraftPlugin
                 /** @var Asset $asset */
                 $asset = $event->sender;
                 $event->html = $this->asset->getUsage($asset);
+
+                // Prevent other event listeners from getting invoked
+                $event->handled = true;
+            }
+
+            if ($event->attribute === 'currentUsage') {
+                /** @var Asset $asset */
+                $asset = $event->sender;
+                $event->html = $this->asset->getCurrentUsage($asset);
 
                 // Prevent other event listeners from getting invoked
                 $event->handled = true;

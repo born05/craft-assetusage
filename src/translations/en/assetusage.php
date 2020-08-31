@@ -26,4 +26,5 @@ return [
     'Used {count} time' => 'Used {count} time',
     'Used {count} times' => 'Used {count} times',
     'Unused' => 'Unused',
+    'Current Usage' => 'Current Usage',
 ];

@@ -10,8 +10,6 @@ use craft\elements\Asset as AssetElement;
 
 class Asset extends Component
 {
-    private $usedAssetIds = null;
-
     /**
      * Determines if an asset is in use or not.
      *
@@ -21,14 +19,50 @@ class Asset extends Component
     public function getUsage(AssetElement $asset)
     {
         $results = (new Query())
-          ->select(['id'])
+          ->select(['sourceId'])
           ->from(Table::RELATIONS)
           ->where(['targetId' => $asset->id])
-          ->orWhere(['sourceId' => $asset->id])
-          ->all();
-          
+          ->column();
+
         $count = count($results);
 
+        return $this->formatResults($count);
+    }
+
+    /**
+     * Determines if an asset is in use or not, ignoring revisions.
+     *
+     * @param  AssetElement $asset
+     * @return string
+     */
+    public function getCurrentUsage(AssetElement $asset)
+    {
+        $results = (new Query())
+          ->select(['sourceId'])
+          ->from(Table::RELATIONS)
+          ->where(['targetId' => $asset->id])
+          ->column();
+
+        $elementIds = [];
+        foreach ($results as $result) {
+            $element = Craft::$app->elements->getElementById($result);
+
+            if (isset($element)) {
+                $currentRevision = $element->getCurrentRevision();
+
+                if (!isset($currentRevision) || $currentRevision->id === $element->id) {
+                    $elementIds[] = $element->id;
+                }
+            }
+        }
+
+        $count = count($elementIds);
+
+        return $this->formatResults($count);
+    }
+
+    private function formatResults($count)
+    {
         if ($count === 1) {
             return Craft::t('assetusage', 'Used {count} time', [ 'count' => $count ]);
         } else if ($count > 1) {
