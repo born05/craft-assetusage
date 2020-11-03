@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.2.0.1 - 2020-11-03
+### Fixed
+- Fixed composer.json for composer 2
+
 ## 2.2.0 - 2020-08-28
 ### Added
 - Added new Current Usage column, which ignores revisions and deleted elements.
