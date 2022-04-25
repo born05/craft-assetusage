@@ -16,7 +16,7 @@ class Asset extends Component
      * @param  AssetElement $asset
      * @return string
      */
-    public function getUsage(AssetElement $asset)
+    public function getUsage(AssetElement $asset): string
     {
         $results = (new Query())
           ->select(['sourceId'])
@@ -35,7 +35,7 @@ class Asset extends Component
      * @param  AssetElement $asset
      * @return string
      */
-    public function getCurrentUsage(AssetElement $asset)
+    public function getCurrentUsage(AssetElement $asset): string
     {
         $results = (new Query())
           ->select(['sourceId'])
@@ -61,7 +61,7 @@ class Asset extends Component
         return $this->formatResults($count);
     }
 
-    private function formatResults($count)
+    private function formatResults($count): string
     {
         if ($count === 1) {
             return Craft::t('assetusage', 'Used {count} time', [ 'count' => $count ]);

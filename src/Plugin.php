@@ -16,7 +16,7 @@ class Plugin extends CraftPlugin
     /**
      * @var string
      */
-    public $schemaVersion = '2.0.0';
+    public string $schemaVersion = '2.0.0';
 
     /**
      * Static property that is an instance of this plugin class so that it can be accessed via
@@ -26,7 +26,7 @@ class Plugin extends CraftPlugin
      */
     public static $plugin;
 
-    public function init()
+    public function init(): void
     {
         parent::init();
         self::$plugin = $this;
