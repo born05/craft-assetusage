@@ -10,7 +10,7 @@
         "asset usage"
     ],
     "support": {
-        "docs": "https://github.com/born05/craft-assetusage/blob/master/README.md",
+        "docs": "https://github.com/born05/craft-assetusage/blob/craft4/README.md",
         "issues": "https://github.com/born05/craft-assetusage/issues"
     },
     "license": "MIT",
@@ -34,6 +34,6 @@
         "handle": "assetusage",
         "hasCpSettings": false,
         "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/born05/craft-assetusage/master/CHANGELOG.md"
+        "changelogUrl": "https://raw.githubusercontent.com/born05/craft-assetusage/craft4/CHANGELOG.md"
     }
 }
