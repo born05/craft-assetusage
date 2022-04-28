@@ -24,8 +24,11 @@ class Plugin extends CraftPlugin
      *
      * @var Plugin
      */
-    public static $plugin;
+    public static Plugin $plugin;
 
+    /**
+     * @inheritdoc
+     */
     public function init(): void
     {
         parent::init();
