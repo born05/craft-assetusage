@@ -38,14 +38,14 @@ class Asset extends Component
     public function getCurrentUsage(AssetElement $asset)
     {
         $results = (new Query())
-          ->select(['sourceId'])
+          ->select(['sourceId', 'sourceSiteId'])
           ->from(Table::RELATIONS)
           ->where(['targetId' => $asset->id])
-          ->column();
+          ->all();
 
         $elementIds = [];
         foreach ($results as $result) {
-            $element = Craft::$app->elements->getElementById($result);
+            $element = Craft::$app->elements->getElementById($result['sourceId'], null, $result['sourceSiteId']);
 
             if (isset($element)) {
                 $currentRevision = $element->getCurrentRevision();
@@ -59,13 +59,14 @@ class Asset extends Component
         $count = count($elementIds);
 
         return $this->formatResults($count);
+        return "lol";
     }
 
     private function formatResults($count)
     {
         if ($count === 1) {
             return Craft::t('assetusage', 'Used {count} time', [ 'count' => $count ]);
-        } else if ($count > 1) {
+        } elseif ($count > 1) {
             return Craft::t('assetusage', 'Used {count} times', [ 'count' => $count ]);
         }
 
