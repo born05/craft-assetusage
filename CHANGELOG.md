@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 
 ## 3.0.0 - 2022-07-13
 ### Changed
-- Added craft 4 support thanks to @janhenckens
+- Merged fixes from Craft 3 plugin
 
 ## 3.0.0-beta.1 - 2022-04-28
 ### Changed
