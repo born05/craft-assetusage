@@ -5,6 +5,6 @@ return [
     'Usage' => 'Verwendung',
     'Used {count} time' => '{count}x verwendet',
     'Used {count} times' => '{count}x verwendet',
-    'Unused' => 'Ungenutzt',    
+    'Unused' => 'Ungenutzt',
     'Current Usage' => 'Aktive Verwendung',
 ];

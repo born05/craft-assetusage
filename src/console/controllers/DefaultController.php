@@ -22,7 +22,7 @@ class DefaultController extends Controller
 
         $results = $this->getUnusedAssets();
         foreach ($results as $result) {
-          echo $result['id'] . ' : ' . $result['filename'] . "\n";
+            echo $result['id'] . ' : ' . $result['filename'] . "\n";
         }
 
         return "Done.";
@@ -41,31 +41,31 @@ class DefaultController extends Controller
         $assetCount = count($results);
 
         if ($this->confirm("Delete $assetCount assets?")) {
-          foreach ($results as $result) {
-            echo 'Deleting ' . $result['id'] . ' : ' . $result['filename'] . "\n";
+            foreach ($results as $result) {
+                echo 'Deleting ' . $result['id'] . ' : ' . $result['filename'] . "\n";
 
-            $asset = $assets->getAssetById($result['id']);
-            if ($asset) {
-              Craft::$app->getElements()->deleteElement($asset);
+                $asset = $assets->getAssetById($result['id']);
+                if ($asset) {
+                    Craft::$app->getElements()->deleteElement($asset);
+                }
             }
-          }
 
-          return "Done.";
+            return "Done.";
         }
     }
 
     private function getUnusedAssets()
     {
-      $subQuery = (new Query())
-        ->select('id')
-        ->from(Table::RELATIONS . ' relations')
-        ->where('relations.targetId=assets.id')
-        ->orWhere('relations.sourceId=assets.id');
-  
-      return (new Query())
-        ->select(['id', 'filename'])
-        ->from(Table::ASSETS . ' assets')
-        ->where(['not exists', $subQuery])
-        ->all();
+        $subQuery = (new Query())
+          ->select('id')
+          ->from(Table::RELATIONS . ' relations')
+          ->where('relations.targetId=assets.id')
+          ->orWhere('relations.sourceId=assets.id');
+    
+        return (new Query())
+          ->select(['id', 'filename'])
+          ->from(Table::ASSETS . ' assets')
+          ->where(['not exists', $subQuery])
+          ->all();
     }
 }
