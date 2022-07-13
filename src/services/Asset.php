@@ -44,8 +44,12 @@ class Asset extends Component
           ->all();
 
         $elementIds = [];
+
+        /** @var craft\services\Elements */
+        $elementsService = Craft::$app->elements;
+
         foreach ($results as $result) {
-            $element = Craft::$app->elements->getElementById($result['sourceId'], null, $result['sourceSiteId']);
+            $element = $elementsService->getElementById($result['sourceId'], null, $result['sourceSiteId']);
 
             if (isset($element)) {
                 $currentRevision = $element->getCurrentRevision();
@@ -59,7 +63,6 @@ class Asset extends Component
         $count = count($elementIds);
 
         return $this->formatResults($count);
-        return "lol";
     }
 
     private function formatResults($count): string
