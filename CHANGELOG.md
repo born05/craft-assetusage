@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/) and this p
 ### Changed
 - Added craft 4 support thanks to @janhenckens
 
+## 2.3.0 - 2021-07-13
+### Fixed
+- Current usage now correctly uses the source site thanks to @Zsavajji
+
 ## 2.2.1 - 2021-03-08
 ### Improved
 - Updated German translations thanks to @kringkaste
