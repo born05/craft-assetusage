@@ -59,7 +59,6 @@ class Asset extends Component
         $count = count($elementIds);
 
         return $this->formatResults($count);
-        return "lol";
     }
 
     private function formatResults($count)
