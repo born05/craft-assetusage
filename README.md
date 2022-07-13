@@ -1,6 +1,6 @@
 # Craft Asset Usage plugin
 
-Adds a column to the assets overview to see which assets are used or unused. For Craft 3. The [craft 2](https://github.com/born05/craft-assetusage/tree/craft-2) plugin has moved to a different branch.
+Adds a column to the assets overview to see which assets are used or unused. For Craft 4.
 
 The "Usage" field shows all relations and the "Current Usage" field shows relations excluding revisions and deleted elements.
 
