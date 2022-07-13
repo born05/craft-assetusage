@@ -31,7 +31,9 @@ class Plugin extends CraftPlugin
         parent::init();
         self::$plugin = $this;
 
-        if (!$this->isInstalled) return;
+        if (!$this->isInstalled) {
+            return;
+        }
 
         // Register Components (Services)
         $this->setComponents([
@@ -49,7 +51,7 @@ class Plugin extends CraftPlugin
          *
          * @return array
          */
-        Event::on(Asset::class, Asset::EVENT_REGISTER_TABLE_ATTRIBUTES, function(RegisterElementTableAttributesEvent $event) {
+        Event::on(Asset::class, Asset::EVENT_REGISTER_TABLE_ATTRIBUTES, function (RegisterElementTableAttributesEvent $event) {
             $event->tableAttributes['usage'] = [
                 'label' => Craft::t('assetusage', 'Usage'),
             ];
@@ -59,7 +61,7 @@ class Plugin extends CraftPlugin
             ];
         });
 
-        Event::on(Asset::class, Asset::EVENT_SET_TABLE_ATTRIBUTE_HTML, function(SetElementTableAttributeHtmlEvent $event) {
+        Event::on(Asset::class, Asset::EVENT_SET_TABLE_ATTRIBUTE_HTML, function (SetElementTableAttributeHtmlEvent $event) {
             if ($event->attribute === 'usage') {
                 /** @var Asset $asset */
                 $asset = $event->sender;
