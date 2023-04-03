@@ -6,7 +6,7 @@ use Craft;
 use craft\db\Query;
 use craft\db\Table;
 use yii\console\Controller;
-use yii\helpers\Console;
+use yii\console\ExitCode;
 
 /**
  * Controls
@@ -15,34 +15,36 @@ class DefaultController extends Controller
 {
     /**
      * Lists all unused assets.
+     * @param string|null $volume The handle of the asset's volume.
      */
-    public function actionListUnused()
+    public function actionListUnused(?string $volume = null)
     {
-        echo "Listing all unused asset ids:\n";
+        $this->stdout('Listing all unused asset ids:' . PHP_EOL);
 
-        $results = $this->getUnusedAssets();
+        $results = $this->getUnusedAssets($volume);
         foreach ($results as $result) {
-            echo $result['id'] . ' : ' . $result['filename'] . "\n";
+            $this->stdout($result['id'] . ' : ' . $result['filename'] . PHP_EOL);
         }
 
-        return "Done.";
+        return ExitCode::OK;
     }
 
     /**
      * Deletes all unused assets.
+     * @param string|null $volume The handle of the asset's volume.
      */
-    public function actionDeleteUnused()
+    public function actionDeleteUnused(?string $volume = null)
     {
-        echo "Deleting all unused asset ids:\n";
+        $this->stdout('Deleting all unused asset ids:' . PHP_EOL);
 
-        $assets = Craft::$app->getAssets();
-
-        $results = $this->getUnusedAssets();
+        $results = $this->getUnusedAssets($volume);
         $assetCount = count($results);
 
         if ($this->confirm("Delete $assetCount assets?")) {
+            $assets = Craft::$app->getAssets();
+
             foreach ($results as $result) {
-                echo 'Deleting ' . $result['id'] . ' : ' . $result['filename'] . "\n";
+                $this->stdout('Deleting ' . $result['id'] . ' : ' . $result['filename'] . PHP_EOL);
 
                 $asset = $assets->getAssetById($result['id']);
                 if ($asset) {
@@ -50,22 +52,34 @@ class DefaultController extends Controller
                 }
             }
 
-            return "Done.";
+            $this->stdout('Deleted all unused asset ids.' . PHP_EOL);
         }
+
+        return ExitCode::OK;
     }
 
-    private function getUnusedAssets()
+    private function getUnusedAssets(?string $volume = null)
     {
+        if ($volume) {
+            /** @var craft\models\Volume */
+            $volumeModel = Craft::$app->getVolumes()->getVolumeByHandle($volume);
+        }
+
         $subQuery = (new Query())
           ->select('id')
           ->from(Table::RELATIONS . ' relations')
           ->where('relations.targetId=assets.id')
           ->orWhere('relations.sourceId=assets.id');
     
-        return (new Query())
-          ->select(['id', 'filename'])
-          ->from(Table::ASSETS . ' assets')
-          ->where(['not exists', $subQuery])
-          ->all();
+        $query = (new Query())
+            ->select(['id', 'filename'])
+            ->from(Table::ASSETS . ' assets')
+            ->where(['not exists', $subQuery]);
+
+        if (isset($volumeModel)) {
+            $query->where(['volumeId' => $volumeModel->id]);
+        }
+
+        return $query->all();
     }
 }
