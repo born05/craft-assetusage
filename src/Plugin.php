@@ -5,6 +5,7 @@ namespace born05\assetusage;
 use Craft;
 use born05\assetusage\services\Asset as AssetService;
 use craft\base\Plugin as CraftPlugin;
+use craft\base\Model;
 use craft\console\Application as ConsoleApplication;
 use craft\elements\Asset;
 use craft\events\RegisterElementTableAttributesEvent;
@@ -13,16 +14,11 @@ use yii\base\Event;
 
 class Plugin extends CraftPlugin
 {
-    /**
-     * @var string
-     */
     public string $schemaVersion = '2.0.0';
 
     /**
      * Static property that is an instance of this plugin class so that it can be accessed via
      * Plugin::$plugin
-     *
-     * @var Plugin
      */
     public static Plugin $plugin;
 
@@ -48,19 +44,23 @@ class Plugin extends CraftPlugin
             $this->controllerNamespace = 'born05\assetusage\console\controllers';
         }
 
-        /**
-         * Adds the following attributes to the asset fields in CMS
-         * NOTE: You still need to select them with the 'gear'
-         *
-         * @return array
-         */
+        $this->registerTableAttributes();
+    }
+
+    protected function createSettingsModel(): ?Model
+    {
+        return new \born05\assetusage\models\Settings();
+    }
+
+    /**
+     * Adds the following attributes to the asset fields in CMS
+     * NOTE: You still need to select them with the 'gear'
+     */
+    private function registerTableAttributes()
+    {
         Event::on(Asset::class, Asset::EVENT_REGISTER_TABLE_ATTRIBUTES, function (RegisterElementTableAttributesEvent $event) {
             $event->tableAttributes['usage'] = [
                 'label' => Craft::t('assetusage', 'Usage'),
-            ];
-
-            $event->tableAttributes['currentUsage'] = [
-                'label' => Craft::t('assetusage', 'Current Usage'),
             ];
         });
 
@@ -69,15 +69,6 @@ class Plugin extends CraftPlugin
                 /** @var Asset $asset */
                 $asset = $event->sender;
                 $event->html = $this->asset->getUsage($asset);
-
-                // Prevent other event listeners from getting invoked
-                $event->handled = true;
-            }
-
-            if ($event->attribute === 'currentUsage') {
-                /** @var Asset $asset */
-                $asset = $event->sender;
-                $event->html = $this->asset->getCurrentUsage($asset);
 
                 // Prevent other event listeners from getting invoked
                 $event->handled = true;

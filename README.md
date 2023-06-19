@@ -5,17 +5,34 @@ Adds a column to the assets overview to see which assets are used or unused. For
 The "Usage" field shows all relations and the "Current Usage" field shows relations excluding revisions and deleted elements.
 
 ## Setup
+
 - Go to `admin/assets`
 - Click the "sprocket" icon
 - Check the "Usage" or "Current Usage" column
 - Save
 - The assets table should now show a "Usage" or "Current Usage" column indicating usage
 
+## Settings
+
+The setting values can be overridden from a PHP file within your project’s `config/` folder, named `assetusage.php`.
+
+The file just needs to return an array with the overridden values:
+
+```php
+<?php
+
+return [
+    'includeRevisions' => false,
+];
+```
+
 ### Support
+
 - Everything using an asset field or the relations table, including matrix fields
 - SuperTable
 
 ### Does NOT support (assets not connected through relations table)
+
 - LinkIt
 - Redactor
 - ether/seo
