@@ -23,6 +23,7 @@ The file just needs to return an array with the overridden values:
 
 return [
     'includeRevisions' => false,
+    'renderUsedByInAssetDetail' => true,
 ];
 ```
 
