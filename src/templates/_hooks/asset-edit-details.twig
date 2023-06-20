@@ -1,12 +1,14 @@
-<h3>Used in</h3>
+<h3>{{'Used in'|t('assetusage')}}</h3>
 
-<div class="elements">
-	{% for element in elements %}
-		<a href="{{ element.cpEditUrl }}" class="element small hasstatus">
-			<div class="label">
-				<span class="title">{{element.title}}</span>
-			</div>
-			<span class="status {{ element.status }}" role="img"></span>
-		</a>
-	{% endfor %}
+<div class="elementselect">
+	<div class="elements">
+		{% for element in elements %}
+			<a href="{{ element.cpEditUrl }}" class="element small hasstatus">
+				<div class="label">
+					<span class="title">{{element.title}}</span>
+				</div>
+				<span class="status {{ element.status }}" role="img"></span>
+			</a>
+		{% endfor %}
+	</div>
 </div>

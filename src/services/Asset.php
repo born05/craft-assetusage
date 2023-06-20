@@ -64,7 +64,7 @@ class Asset extends Component
                     $elements[$root->id] = $root;
                 }
             } catch (\Throwable $e) {
-                // let it slide
+                // let it slide...
             }
         }
 
