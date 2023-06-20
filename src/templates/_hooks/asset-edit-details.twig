@@ -1,0 +1,12 @@
+<h3>Used in</h3>
+
+<div class="elements">
+	{% for element in elements %}
+		<a href="{{ element.cpEditUrl }}" class="element small hasstatus">
+			<div class="label">
+				<span class="title">{{element.title}}</span>
+			</div>
+			<span class="status {{ element.status }}" role="img"></span>
+		</a>
+	{% endfor %}
+</div>

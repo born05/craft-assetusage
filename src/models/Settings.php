@@ -7,11 +7,12 @@ use craft\base\Model;
 class Settings extends Model
 {
     public bool $includeRevisions = false;
+    public bool $renderUsedByInAssetDetail = true;
 
     public function defineRules(): array
     {
         return [
-            [['includeRevisions'], 'bool'],
+            [['includeRevisions', 'renderUsedByInAssetDetail'], 'bool'],
         ];
     }
 }
