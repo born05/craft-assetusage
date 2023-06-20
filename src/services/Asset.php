@@ -2,13 +2,13 @@
 
 namespace born05\assetusage\services;
 
-use born05\assetusage\Plugin;
 use Craft;
 use craft\base\Component;
 use craft\db\Query;
 use craft\db\Table;
 use craft\elements\Asset as AssetElement;
 use craft\helpers\ElementHelper;
+use born05\assetusage\Plugin;
 
 class Asset extends Component
 {
@@ -30,7 +30,7 @@ class Asset extends Component
         $count = count(array_filter($relations, function ($relation) {
             try {
                 /** @var craft\base\Element */
-                $element = Craft::$app->elements->getElementById($relation['sourceId'], null, $relation['sourceSiteId']);
+                $element = Craft::$app->elements->getElementById($relation['id'], null, $relation['siteId']);
 
                 return !!$element && !ElementHelper::isDraftOrRevision($element);
             } catch (\Throwable $e) {
@@ -47,7 +47,7 @@ class Asset extends Component
      * @param  AssetElement $asset
      * @return array
      */
-    public function getUsedBy(AssetElement $asset): array
+    public function getUsedIn(AssetElement $asset): array
     {
         $relations = $this->queryRelations($asset);
 
@@ -55,8 +55,12 @@ class Asset extends Component
 
         foreach ($relations as $relation) {
             try {
+                /** @var craft\services\Elements */
+                $elementsService = Craft::$app->elements;
+
                 /** @var craft\base\Element */
-                $element = Craft::$app->elements->getElementById($relation['sourceId'], null, $relation['sourceSiteId']);
+                $element = $elementsService->getElementById($relation['id'], null, $relation['siteId']);
+
                 $root = ElementHelper::rootElement($element);
                 $isRevision = $root->getIsDraft() || $root->getIsRevision();
 
@@ -74,7 +78,7 @@ class Asset extends Component
     private function queryRelations(AssetElement $asset): array
     {
         return (new Query())
-            ->select(['sourceId', 'sourceSiteId'])
+            ->select(['sourceId as id', 'sourceSiteId as siteId'])
             ->from(Table::RELATIONS)
             ->where(['targetId' => $asset->id])
             ->all();

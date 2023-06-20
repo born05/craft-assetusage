@@ -12,6 +12,7 @@ use craft\elements\Asset;
 use craft\events\DefineElementEditorHtmlEvent;
 use craft\events\RegisterElementTableAttributesEvent;
 use craft\events\SetElementTableAttributeHtmlEvent;
+use craft\web\View;
 use yii\base\Event;
 
 class Plugin extends CraftPlugin
@@ -64,10 +65,8 @@ class Plugin extends CraftPlugin
             if ($event->element instanceof Asset) {
                 /** @var Asset */
                 $asset = $event->element;
-                $elements = $this->asset->getUsedBy($asset);
-                Craft::error($elements);
                 $event->html .= Craft::$app->getView()->renderTemplate('assetusage/_hooks/asset-edit-details', [
-                    'elements' => $this->asset->getUsedBy($asset),
+                    'elements' => $this->asset->getUsedIn($asset),
                 ]);
             }
         });
@@ -89,6 +88,7 @@ class Plugin extends CraftPlugin
             if ($event->attribute === 'usage') {
                 /** @var Asset $asset */
                 $asset = $event->sender;
+
                 $event->html = $this->asset->getUsageCount($asset);
 
                 // Prevent other event listeners from getting invoked
