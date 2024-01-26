@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.3.0 - 2024-01-26
+
+### Fixed
+
+- Ignore deleted assets when listing unused from the console
+
 ## 3.2.0 - 2023-06-20
 
 ### Added

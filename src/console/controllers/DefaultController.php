@@ -67,14 +67,16 @@ class DefaultController extends Controller
 
         $subQuery = (new Query())
           ->select('id')
-          ->from(Table::RELATIONS . ' relations')
+          ->from(['relations' => Table::RELATIONS])
           ->where('relations.targetId=assets.id')
           ->orWhere('relations.sourceId=assets.id');
     
         $query = (new Query())
-            ->select(['id', 'filename'])
-            ->from(Table::ASSETS . ' assets')
-            ->where(['not exists', $subQuery]);
+            ->select(['assets.id', 'assets.filename'])
+            ->from(['assets' => Table::ASSETS])
+            ->innerJoin(['elements' => Table::ELEMENTS], '[[elements.id]] = [[assets.id]]')
+            ->where(['elements.dateDeleted' => null])
+            ->andWhere(['not exists', $subQuery]);
 
         if (isset($volumeModel)) {
             $query->where(['volumeId' => $volumeModel->id]);
