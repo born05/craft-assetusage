@@ -11,8 +11,7 @@ use craft\controllers\ElementsController;
 use craft\elements\Asset;
 use craft\events\DefineElementEditorHtmlEvent;
 use craft\events\RegisterElementTableAttributesEvent;
-use craft\events\SetElementTableAttributeHtmlEvent;
-use craft\web\View;
+use craft\events\DefineAttributeHtmlEvent;
 use yii\base\Event;
 
 class Plugin extends CraftPlugin
@@ -83,8 +82,7 @@ class Plugin extends CraftPlugin
                 'label' => Craft::t('assetusage', 'Usage'),
             ];
         });
-
-        Event::on(Asset::class, Asset::EVENT_SET_TABLE_ATTRIBUTE_HTML, function (SetElementTableAttributeHtmlEvent $event) {
+        Event::on(Asset::class, Asset::EVENT_DEFINE_ATTRIBUTE_HTML, function (DefineAttributeHtmlEvent $event) {
             if ($event->attribute === 'usage') {
                 /** @var Asset $asset */
                 $asset = $event->sender;
